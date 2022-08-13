@@ -58,7 +58,7 @@ functions:
     events:
       - http:
           path: customer/{customerId}
-            method: DELETE
+          method: DELETE
   getAllCustomer:
     handler: api.getAllCustomer
     name: get-all-customer
