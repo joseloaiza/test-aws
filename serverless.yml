@@ -1,12 +1,16 @@
 service: test-crud-aws
 
+custom:
+  settings:
+    CUSTOMERS_TABLE: customers
+
 provider:
   name: aws
   runtime: nodejs14.x
   state: ${opt:stage,'dev'}
   region: us-east-1
-  environment:
-    DYNAMO_TABLE_NAME: ${self:custom.cusTableName}
+  environment: ${self:custom.settings}
+
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -17,9 +21,8 @@ provider:
         - dybamodb:UpdateItem
         - dybamodb:DeleteItem
       Resource:
-        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.cusTableName}"
-custom:
-  cusTableName: customer-table-${self:provider.stage}
+        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.CUSTOMERS_TABLE}"
+
 plugins:
   - serverless-iam-role-per-function
 functions:
@@ -72,7 +75,7 @@ resources:
     customersTable:
       Type: AWS::DynamoDB::Table
       properties:
-        TableName: ${self:custom.cusTableName}
+        TableName: ${self:custom.settings.CUSTOMERS_TABLE}
         AttributeDefinitions:
           - AttributeName: customerId
             AttributeType: S
