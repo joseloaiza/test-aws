@@ -11,7 +11,7 @@ const getCustomer = async (event) => {
   const response = { statusCode: 200 };
   try {
     const params = {
-      TableName: process.env.DYNAMODB_TABLE_NAME,
+      TableName: process.env.CUSTOMERS_TABLE,
       Key: marshall({ customerId: event.pathParameters.customerId }),
     };
     const item = await db.send(new GetItemCommand(params));
@@ -39,7 +39,7 @@ const createCustomer = async (event) => {
     const body = JSON.parse(event.body);
 
     const params = {
-      TableName: process.env.DYNAMODB_TABLE_NAME,
+      TableName: process.env.CUSTOMERS_TABLE,
       Item: marshall(body || {}),
     };
     const createResult = await db.send(new PutItemCommand(params));
@@ -65,7 +65,7 @@ const deleteCustomer = async (event) => {
 
   try {
     const params = {
-      TableName: process.env.DYNAMODB_TABLE_NAME,
+      TableName: process.env.CUSTOMERS_TABLE,
       Key: marshall({ postId: event.pathParameters.customerId }),
     };
     const deleteResult = await db.send(new DeleteItemCommand(params));
@@ -92,7 +92,7 @@ const getAllCustomer = async () => {
 
   try {
     const { Items } = await db.send(
-      new ScanCommand({ TableName: process.env.DYNAMODB_TABLE_NAME })
+      new ScanCommand({ TableName: process.env.CUSTOMERS_TABLE })
     );
 
     response.body = JSON.stringify({
