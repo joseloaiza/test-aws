@@ -78,11 +78,11 @@ resources:
       Properties:
         TableName: ${self:custom.settings.CUSTOMERS_TABLE}
         AttributeDefinitions:
-          - AttributeName: customerId
-            AttributeType: S
+          - AttributeName: "customerId"
+            AttributeType: "S"
         KeySchema:
-          - AttributeName: customerId
-            keyType: HASH
+          - AttributeName: "customerId"
+            KeyType: "HASH"
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
