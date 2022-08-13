@@ -73,7 +73,7 @@ functions:
           method: GET
 resources:
   Resources:
-    customersTable:
+    CustomersTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:custom.settings.CUSTOMERS_TABLE}
