@@ -7,7 +7,7 @@ custom:
 provider:
   name: aws
   runtime: nodejs14.x
-  state: ${opt:stage,'dev'}
+  stage: dev
   region: us-east-1
   environment: ${self:custom.settings}
 
@@ -34,6 +34,7 @@ functions:
     events:
       - http:
           path: customer/{customerId}
+          method: GET
   createCustomer:
     handler: api.createCustomer
     name: create-customer
@@ -52,15 +53,15 @@ functions:
       - http:
           path: customer/{customerId}
           method: PUT
-  deleteCustomer:
-    handler: api.deleteCustomer
-    name: delete-customer
-    memorySize: 128
-    timeout: 5
-    events:
-      - http:
-          path: customer/{customerId}
-          method: DELETE
+  # deleteCustomer:
+  #   handler: api.deleteCustomer
+  #   name: delete-customer
+  #   memorySize: 128
+  #   timeout: 5
+  #   events:
+  #     - http:
+  #         path: customer/{customerId}
+  #         method: DELETE
   getAllCustomer:
     handler: api.getAllCustomer
     name: get-all-customer
@@ -74,7 +75,7 @@ resources:
   Resources:
     customersTable:
       Type: AWS::DynamoDB::Table
-      properties:
+      Properties:
         TableName: ${self:custom.settings.CUSTOMERS_TABLE}
         AttributeDefinitions:
           - AttributeName: customerId
