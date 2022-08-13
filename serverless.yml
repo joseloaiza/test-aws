@@ -1,0 +1,85 @@
+service: test-crud-aws
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  state: dev
+  region: us-east-1
+  environment:
+    DYNAMO_TABLE_NAME: ${self:custom.customersTableName}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dybamodb:DescribeTable
+        - dybamodb:Scan
+        - dybamodb:GetItem
+        - dybamodb:PutItem
+        - dybamodb:UpdateItem
+        - dybamodb:DeleteItem
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.customersTableName}"
+custom:
+  customersTableName: customer-table-${self:provider.stage}
+
+plugins:
+  - serverless-iam-role-per-function
+functions:
+  getCustomer:
+    handler: api.getCustomer
+    name: get-customer
+    memorySize: 128
+    timeout: 5
+    events:
+      - http:
+          path: customer/{customerId}
+  createCustomer:
+    handler: api.createCustomer
+    name: create-customer
+    memorySize: 128
+    timeout: 5
+    events:
+      - http:
+          path: customer
+          method: POST
+  updateCustomer:
+    handler: api.updateCustomer
+    name: update-customer
+    memorySize: 128
+    timeout: 5
+    events:
+      - http:
+          path: customer/{customerId}
+          method: PUT
+  deleteCustomer:
+    handler: api.deleteCustomer
+    name: delete-customer
+    memorySize: 128
+    timeout: 5
+    events:
+      - http:
+          path: customer/{customerId}
+            method: DELETE
+  getAllCustomer:
+    handler: api.getAllCustomer
+    name: get-all-customer
+    memorySize: 128
+    timeout: 5
+    events:
+      - http:
+          path: customers
+          method: GET
+resources:
+  Resources:
+    customersTable:
+      Type: AWS::DynamoDB::Table
+      properties:
+        TableName: ${self:custom.customersTableName}
+        AttributeDefinitions:
+          - AttributeName: customerId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: customerId
+            keyType: HASH
+        provisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
