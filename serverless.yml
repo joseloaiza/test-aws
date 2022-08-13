@@ -24,7 +24,7 @@ provider:
         - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.CUSTOMERS_TABLE}"
 
 plugins:
-  - serverless-iam-role-per-function
+  - serverless-iam-roles-per-function
 functions:
   getCustomer:
     handler: api.getCustomer
