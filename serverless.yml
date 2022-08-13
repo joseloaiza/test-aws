@@ -83,6 +83,6 @@ resources:
         KeySchema:
           - AttributeName: customerId
             keyType: HASH
-        provisionedThroughput:
+        ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
