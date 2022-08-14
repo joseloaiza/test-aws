@@ -52,15 +52,16 @@ functions:
   #     - http:
   #         path: Hero/{id}
   #         method: PUT
-  #   deleteHero:
-  #     handler: api.deleteHero
-  #     name: delete-hero
-  #     memorySize: 128
-  #     timeout: 5
-  #     events:
-  #       - http:
-  #           path: Hero/{id}
-  #           method: DELETE
+  deleteHero:
+    handler: hero/delete.deleteHero
+    name: delete-hero-v1
+    memorySize: 128
+    timeout: 20
+    events:
+      - http:
+          path: hero/{id}
+          method: DELETE
+          cors: true
   listHeroes:
     handler: hero/list.listHeroes
     name: get-list-heroes
