@@ -50,45 +50,57 @@ module.exports.listHeroesExcel = async (event, context) => {
     });
 
     const buffer = await workbook.writeToBuffer();
-    const namefile = `${process.env.EXCEL_FOLDER}/${date}.xlsx`;
+    const filename = `${process.env.EXCEL_FOLDER}/${date}.xlsx`;
     const params_s3 = {
       Bucket: process.env.BUCKET_NAME,
-      Key: namefile,
+      Key: filename,
       Body: buffer,
     };
 
     await S3.upload(params_s3).promise();
-    await workbook.write(namefile);
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "*",
+        "Content-type":
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "Content-Disposition": `attachment; filename=${filename}`,
+      },
+      isBase64Encoded: true,
+      body: buffer.toString("base64"),
+      //await workbook.write(namefile);
 
-    // const file = await S3.getObject(process.env.BUCKET_NAME, namefile).promise();
-    // S3.getObject(params, function (err, data) {
-    //   if (err) {
-    //     console.error(err.code, "-", err.message);
-    //     return callback(err);
-    //   }
+      // const file = await S3.getObject(process.env.BUCKET_NAME, namefile).promise();
+      // S3.getObject(params, function (err, data) {
+      //   if (err) {
+      //     console.error(err.code, "-", err.message);
+      //     return callback(err);
+      //   }
 
-    //   fs.writeFile("/tmp/filename", data.Body, function (err) {
-    //     if (err) console.log(err.code, "-", err.message);
+      //   fs.writeFile("/tmp/filename", data.Body, function (err) {
+      //     if (err) console.log(err.code, "-", err.message);
 
-    //     return callback(err);
-    //   });
-    // });
+      //     return callback(err);
+      //   });
+      // });
 
-    // workbook.writeToBuffer().then((buffer) => {
-    //   var params = {
-    //     Bucket: "data-heroes",
-    //     Key: `xlsxFolder/${date}.xlsx`,
-    //     Body: buffer,
-    //     ACL: "public-read",
-    //   };
-    //   await S3.upload(params).promise();
-    // });
+      // workbook.writeToBuffer().then((buffer) => {
+      //   var params = {
+      //     Bucket: "data-heroes",
+      //     Key: `xlsxFolder/${date}.xlsx`,
+      //     Body: buffer,
+      //     ACL: "public-read",
+      //   };
+      //   await S3.upload(params).promise();
+      // });
 
-    return sendResponse(200, {
-      message: "Excel loaded successfully",
-      context,
-      event,
-    });
+      // return sendResponse(200, {
+      //   message: "Excel loaded successfully",
+      //   context,
+      //   event,
+      // });
+    };
   } catch (e) {
     return sendResponse(500, {
       error: e.message,
