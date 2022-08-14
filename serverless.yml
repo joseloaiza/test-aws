@@ -75,10 +75,10 @@ resources:
       Properties:
         TableName: ${self:custom.cusTableName}
         AttributeDefinitions:
-          - AttributeName: "customerId"
+          - AttributeName: "id"
             AttributeType: "S"
         KeySchema:
-          - AttributeName: "customerId"
+          - AttributeName: "id"
             KeyType: "HASH"
         ProvisionedThroughput:
           ReadCapacityUnits: 1

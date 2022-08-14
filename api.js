@@ -13,7 +13,7 @@ const getCustomer = async (event) => {
   try {
     const params = {
       TableName: process.env.CUSTOMERS_TABLE,
-      Key: marshall({ customerId: event.pathParameters.customerId }),
+      Key: marshall({ id: event.pathParameters.id }),
     };
     const item = await db.send(new GetItemCommand(params));
     console.log(Item);
@@ -39,7 +39,7 @@ const createCustomer = async (event) => {
 
   try {
     const customer = {
-      customerId: uuid(),
+      id: uuid(),
       createdAt: new Date().toISOString(),
       name: event.body.name,
       alias: event.body.alias,
@@ -77,7 +77,7 @@ const deleteCustomer = async (event) => {
   try {
     const params = {
       TableName: process.env.CUSTOMERS_TABLE,
-      Key: marshall({ postId: event.pathParameters.customerId }),
+      Key: marshall({ id: event.pathParameters.id }),
     };
     const deleteResult = await db.send(new DeleteItemCommand(params));
 
