@@ -39,20 +39,18 @@ const createHero = async (event) => {
   const response = { statusCode: 200 };
 
   try {
-    const hero = {
-      id: { S: uuidv4() },
-      name: { S: event.body.name },
-      alias: { S: event.body.alias },
-      species: { S: event.body.species },
-      companyName: { S: event.body.companyName },
-      companyTeam: { S: event.body.companyTeam },
-    };
-
     //const body = JSON.parse(event.body);
 
     const params = {
       TableName: process.env.HEROES_TABLE,
-      Item: hero,
+      Item: {
+        id: { S: uuidv4() },
+        name: { S: event.body.name },
+        alias: { S: event.body.alias },
+        species: { S: event.body.species },
+        companyName: { S: event.body.companyName },
+        companyTeam: { S: event.body.companyTeam },
+      },
     };
     const createResult = await db.send(new PutItemCommand(params));
 
