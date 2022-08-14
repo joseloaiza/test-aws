@@ -5,6 +5,7 @@ const {
   PutItemCommand,
   DeleteItemCommand,
   ScanCommand,
+  CreateTableCommand,
 } = require("@aws-sdk/client-dynamodb");
 const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 
@@ -19,7 +20,7 @@ const getHero = async (event) => {
     console.log(item);
     response.body = JSON.stringify({
       messsage: "Succesfully retrieved hero",
-      data: item ? unmarshall(item) : {},
+      data: item,
       rawData: item,
     });
   } catch (error) {
