@@ -13,6 +13,7 @@ provider:
     REGION: ${self:provider.region}
     BUCKET_NAME: ${self:custom.bucketName}
     EXCEL_FOLDER: ${self:custom.excelFolder}
+    PDF_FOLDER: ${self:custom.pdfFolder}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -28,8 +29,25 @@ custom:
   heroTableName: Heroes-Table${self:provider.stage}
   bucketName: data-heroes
   excelFolder: xlsxFolder
+  pdfFolder: pdfFolder
+  serverless-offline:
+    location: .webpack/service
+  bundle:
+    sourcemaps: false
+    copyFiles:
+      - from: "node_modules/chrome-aws-lambda/bin/aws.tar.br"
+        to: "./bin"
+      - from: "node_modules/chrome-aws-lambda/bin/chromium.br"
+        to: "./bin"
+      - from: "node_modules/chrome-aws-lambda/bin/swiftshader.tar.br"
+        to: "./bin"
+  headers:
+    - Content-Type
 plugins:
   - serverless-iam-roles-per-function
+  - serverless-offline
+  - serverless-deployment-bucket
+  - serverless-bundle
 functions:
   getHero:
     handler: hero/get.getHero
@@ -91,6 +109,16 @@ functions:
           path: heroesExcel
           method: GET
           cors: true
+  listHeroesExcel:
+    handler: hero/pdfList.listHeroesPdf
+    name: get-pdf-heroes
+    memorySize: 128
+    timeout: 20
+    events:
+      - http:
+          path: heroesPdf
+          method: GET
+          cors: true        
 resources:
   Resources:
     HerosTable:
