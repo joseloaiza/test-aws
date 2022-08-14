@@ -39,16 +39,16 @@ const createHero = async (event) => {
   const response = { statusCode: 200 };
 
   try {
-    const reqBody = JSON.parse(event.body);
-    const hero = {
-      id: uuidv4(),
-      name: reqBody.name,
-      alias: reqBody.alias,
-      species: reqBody.species,
-      companyName: reqBody.companyName,
-      companyTeam: reqBody.companyTeam,
-    };
-    const herobody = JSON.parse(hero);
+    // const reqBody = JSON.parse(event.body);
+    // const hero = {
+    //   id: uuidv4(),
+    //   name: reqBody.name,
+    //   alias: reqBody.alias,
+    //   species: reqBody.species,
+    //   companyName: reqBody.companyName,
+    //   companyTeam: reqBody.companyTeam,
+    // };
+    // const herobody = JSON.parse(hero);
 
     // id: { S: uuidv4() },
     // name: { S: event.body.name },
@@ -57,10 +57,17 @@ const createHero = async (event) => {
     // companyName: { S: event.body.companyName },
     // companyTeam: { S: event.body.companyTeam },
 
-    console.log(herobody);
+    //console.log(herobody);
     const params = {
       TableName: process.env.HEROES_TABLE,
-      Item: marshall(herobody || {}),
+      Item: marshall({
+        id: uuidv4(),
+        name: event.body.name,
+        alias: event.body.alias,
+        species: event.body.species,
+        companyName: event.body.companyName,
+        companyTeam: event.body.companyTeam,
+      }),
     };
 
     const createResult = await db.send(new PutItemCommand(params));
