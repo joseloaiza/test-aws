@@ -60,7 +60,7 @@ functions:
           path: Hero/{id}
           method: DELETE
   getAllHeroes:
-    handler: api.getAllHero
+    handler: api.getAllHeroes
     name: get-all-heroes
     memorySize: 128
     timeout: 15
