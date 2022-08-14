@@ -6,7 +6,7 @@ provider:
   stage: dev
   region: us-east-1
   environment:
-    CUSTOMERS_TABLE: ${self:custom.cusTableName}
+    HEROES_TABLE: ${self:custom.heroTableName}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -17,63 +17,63 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
-        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.cusTableName}"
+        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.heroTableName}"
 custom:
-  cusTableName: customers-${self:provider.stage}
+  heroTableName: heroes-${self:provider.stage}
 plugins:
   - serverless-iam-roles-per-function
 functions:
-  getCustomer:
-    handler: api.getCustomer
-    name: get-customer
+  getHero:
+    handler: api.getHero
+    name: get-hero
     memorySize: 128
     timeout: 5
     events:
       - http:
-          path: customer/{customerId}
+          path: hero/{id}
           method: GET
-  createCustomer:
-    handler: api.createCustomer
-    name: create-customer
+  createHero:
+    handler: api.createHero
+    name: create-hero
     memorySize: 128
     timeout: 5
     events:
       - http:
-          path: customer
+          path: hero
           method: POST
-  updateCustomer:
-    handler: api.updateCustomer
-    name: update-customer
-    memorySize: 128
-    timeout: 5
-    events:
-      - http:
-          path: customer/{customerId}
-          method: PUT
-  # deleteCustomer:
-  #   handler: api.deleteCustomer
-  #   name: delete-customer
+  # updateHero:
+  #   handler: api.updateHero
+  #   name: update-Hero
   #   memorySize: 128
   #   timeout: 5
   #   events:
   #     - http:
-  #         path: customer/{customerId}
-  #         method: DELETE
-  getAllCustomer:
-    handler: api.getAllCustomer
-    name: get-all-customer
+  #         path: Hero/{HeroId}
+  #         method: PUT
+  deleteHero:
+    handler: api.deleteHero
+    name: delete-hero
     memorySize: 128
     timeout: 5
     events:
       - http:
-          path: customers
+          path: Hero/{HeroId}
+          method: DELETE
+  getAllHeroes:
+    handler: api.getAllHero
+    name: get-all-heroes
+    memorySize: 128
+    timeout: 5
+    events:
+      - http:
+          path: Heros
           method: GET
 resources:
   Resources:
-    CustomersTable:
+    HerosTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${self:custom.cusTableName}
+        TableName: ${self:custom.heroTableName}
         AttributeDefinitions:
           - AttributeName: "id"
             AttributeType: "S"

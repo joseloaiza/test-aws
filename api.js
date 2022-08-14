@@ -12,7 +12,7 @@ const getCustomer = async (event) => {
   const response = { statusCode: 200 };
   try {
     const params = {
-      TableName: process.env.CUSTOMERS_TABLE,
+      TableName: process.env.HEROES_TABLE,
       Key: marshall({ id: event.pathParameters.id }),
     };
     const item = await db.send(new GetItemCommand(params));
@@ -50,7 +50,7 @@ const createCustomer = async (event) => {
     //const body = JSON.parse(event.body);
 
     const params = {
-      TableName: process.env.CUSTOMERS_TABLE,
+      TableName: process.env.HEROES_TABLE,
       Item: marshall(customer || {}),
     };
     const createResult = await db.send(new PutItemCommand(params));
@@ -76,7 +76,7 @@ const deleteCustomer = async (event) => {
 
   try {
     const params = {
-      TableName: process.env.CUSTOMERS_TABLE,
+      TableName: process.env.HEROES_TABLE,
       Key: marshall({ id: event.pathParameters.id }),
     };
     const deleteResult = await db.send(new DeleteItemCommand(params));
@@ -103,7 +103,7 @@ const getAllCustomer = async () => {
 
   try {
     const { Items } = await db.send(
-      new ScanCommand({ TableName: process.env.CUSTOMERS_TABLE })
+      new ScanCommand({ TableName: process.env.HEROES_TABLE })
     );
 
     response.body = JSON.stringify({
