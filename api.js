@@ -25,7 +25,7 @@ const getHero = async (event) => {
   } catch (error) {
     console.log(error);
     response.statusCode = 400;
-    res.body = JSON.stringify({
+    response.body = JSON.stringify({
       message: "Failed to retrieve hero",
       errorMsg: error.messsage,
       errorStack: error.stack,
@@ -38,7 +38,7 @@ const createHero = async (event) => {
   const response = { statusCode: 200 };
 
   try {
-    const customer = {
+    const hero = {
       id: uuid(),
       createdAt: new Date().toISOString(),
       name: event.body.name,
@@ -51,7 +51,7 @@ const createHero = async (event) => {
 
     const params = {
       TableName: process.env.HEROES_TABLE,
-      Item: marshall(customer || {}),
+      Item: marshall(hero || {}),
     };
     const createResult = await db.send(new PutItemCommand(params));
 
