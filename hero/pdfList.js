@@ -1,11 +1,11 @@
 "use strict";
+//const chromium = require("chrome-aws-lambda");
 const chromium = require("chrome-aws-lambda");
-const puppeteer = requi("puppeteer-serverless");
-const pug = require("pug");
+const puppeteer = require("puppeteer-serverless");
 const { sendResponse } = require("../functions/index");
 const dynamoDb = require("../db");
 var AWS = require("aws-sdk");
-var S3 = new AWS.S3();
+//var S3 = new AWS.S3();
 
 module.exports.listHeroesPdf = async (event, context) => {
   try {
@@ -16,8 +16,15 @@ module.exports.listHeroesPdf = async (event, context) => {
     let pdf = null;
     var date = new Date();
     //get list or heroes
+    const ep = await chromium.executablePath;
+    browser = await chromium.puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: ep,
+      headless: chromium.headless,
+    });
     const heroes = await dynamoDb.scan(params).promise();
-    browser = await puppeteer.launch({});
+
     const page = await browser.newPage();
     await page.setContent("<html><body><p>Test</p></body></html>", {
       waitUntil: "load",
