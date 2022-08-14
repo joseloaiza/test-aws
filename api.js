@@ -40,14 +40,14 @@ const createHero = async (event) => {
 
   try {
     const hero = {
-      id: uuidv4(),
-      createdAt: new Date().toISOString(),
-      name: event.body.name,
-      alias: event.body.alias,
-      species: event.body.species,
-      companyName: event.body.companyName,
-      companyTeam: event.body.companyTeam,
+      id: { S: uuidv4() },
+      name: { S: event.body.name },
+      alias: { S: event.body.alias },
+      species: { S: event.body.species },
+      companyName: { S: event.body.companyName },
+      companyTeam: { S: event.body.companyTeam },
     };
+
     //const body = JSON.parse(event.body);
 
     const params = {
