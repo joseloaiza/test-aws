@@ -48,7 +48,7 @@ functions:
   #   timeout: 5
   #   events:
   #     - http:
-  #         path: Hero/{HeroId}
+  #         path: Hero/{id}
   #         method: PUT
   deleteHero:
     handler: api.deleteHero
@@ -57,7 +57,7 @@ functions:
     timeout: 5
     events:
       - http:
-          path: Hero/{HeroId}
+          path: Hero/{id}
           method: DELETE
   getAllHeroes:
     handler: api.getAllHero
