@@ -51,7 +51,6 @@ module.exports.listHeroesExcel = async (event) => {
       Bucket: "data-heroes",
       Key: `xlsxFolder/${date}.xlsx`,
       Body: buffer,
-      ACL: "public-read",
     };
 
     await S3.upload(params_s3).promise();
