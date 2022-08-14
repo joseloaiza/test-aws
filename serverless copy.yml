@@ -1,4 +1,4 @@
-service: hero-crud-aws
+service: test-crud-aws
 
 provider:
   name: aws
@@ -6,7 +6,7 @@ provider:
   stage: dev
   region: us-east-1
   environment:
-    DYNAMO_TABLE_NAME: ${self:custom.heroTableName}
+    HEROES_TABLE: ${self:custom.heroTableName}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -19,29 +19,28 @@ provider:
       Resource:
         - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.heroTableName}"
 custom:
-  heroTableName: Heroes-Table${self:provider.stage}
+  heroTableName: heroes-${self:provider.stage}
 plugins:
   - serverless-iam-roles-per-function
 functions:
-  # getHero:
-  #   handler: api.getHero
-  #   name: get-hero
-  #   memorySize: 128
-  #   timeout: 5
-  #   events:
-  #     - http:
-  #         path: hero/{id}
-  #         method: GET
+  getHero:
+    handler: api.getHero
+    name: get-hero
+    memorySize: 128
+    timeout: 5
+    events:
+      - http:
+          path: hero/{id}
+          method: GET
   createHero:
-    handler: hero/create.createHero
+    handler: api.createHero
     name: create-hero
     memorySize: 128
     timeout: 5
     events:
       - http:
-          path: hero/create
+          path: hero
           method: POST
-          cors: true
   # updateHero:
   #   handler: api.updateHero
   #   name: update-Hero
@@ -51,24 +50,24 @@ functions:
   #     - http:
   #         path: Hero/{id}
   #         method: PUT
-#   deleteHero:
-#     handler: api.deleteHero
-#     name: delete-hero
-#     memorySize: 128
-#     timeout: 5
-#     events:
-#       - http:
-#           path: Hero/{id}
-#           method: DELETE
-#   getAllHeroes:
-#     handler: api.getAllHeroes
-#     name: get-all-heroes
-#     memorySize: 128
-#     timeout: 15
-#     events:
-#       - http:
-#           path: Heros
-#           method: GET
+  deleteHero:
+    handler: api.deleteHero
+    name: delete-hero
+    memorySize: 128
+    timeout: 5
+    events:
+      - http:
+          path: Hero/{id}
+          method: DELETE
+  getAllHeroes:
+    handler: api.getAllHeroes
+    name: get-all-heroes
+    memorySize: 128
+    timeout: 15
+    events:
+      - http:
+          path: Heros
+          method: GET
 resources:
   Resources:
     HerosTable:
