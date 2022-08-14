@@ -8,6 +8,8 @@ provider:
   environment:
     DYNAMO_TABLE_NAME: ${self:custom.heroTableName}
     REGION: ${self:provider.region}
+    BUCKET_NAME: ${self:custom.bucketName}
+    EXCEL_FOLDER: ${self:custom.excelFolder}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -21,6 +23,8 @@ provider:
         - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.heroTableName}"
 custom:
   heroTableName: Heroes-Table${self:provider.stage}
+  bucketName: data-heroes
+  excelFolder: xlsxFolder
 plugins:
   - serverless-iam-roles-per-function
 functions:
