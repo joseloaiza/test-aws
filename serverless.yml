@@ -46,6 +46,9 @@ plugins:
   # - serverless-deployment-bucket
   # - serverless-bundle
   - serverless-apigw-binary
+package:
+  exclude:
+    - pdf_generation/**
 layers:
   pdfGeneration:
     path: pdf_generation
