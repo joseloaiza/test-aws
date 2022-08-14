@@ -51,7 +51,7 @@ const createHero = async (event) => {
 
     const params = {
       TableName: process.env.HEROES_TABLE,
-      Item: marshall(hero || {}),
+      Item: hero,
     };
     const createResult = await db.send(new PutItemCommand(params));
 
