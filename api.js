@@ -36,11 +36,21 @@ const getCustomer = async (event) => {
 const createCustomer = async (event) => {
   const response = { statusCode: 200 };
   try {
-    const body = JSON.parse(event.body);
+    const customer = {
+      customerId: uuid(),
+      createdAt: new Date().toISOString(),
+      name: reqBody.name,
+      alias: reqBody.alias,
+      species: reqBody.species,
+      title: reqBody.title,
+      companyName: reqBody.companyName,
+      companyTeam: reqBody.companyTeam,
+    };
+    //const body = JSON.parse(event.body);
 
     const params = {
       TableName: process.env.CUSTOMERS_TABLE,
-      Item: marshall(body || {}),
+      Item: marshall(customer || {}),
     };
     const createResult = await db.send(new PutItemCommand(params));
 
