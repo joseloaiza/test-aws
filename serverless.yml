@@ -50,7 +50,7 @@ functions:
     timeout: 20
     events:
       - http:
-          path: hero/{id}
+          path: hero
           method: PUT
           cors: true
   deleteHero:

@@ -32,6 +32,9 @@ module.exports.updateHero = async (event) => {
       return sendResponse(404, { message: "Updated hero data not found" });
     }
   } catch (e) {
-    return sendResponse(500, { message: "Could not update this hero" });
+    return sendResponse(500, {
+      error: e.message,
+      message: "Could not update this hero",
+    });
   }
 };
