@@ -7,7 +7,7 @@ provider:
   region: us-east-1
   environment:
     DYNAMO_TABLE_NAME: ${self:custom.heroTableName}
-    REGION: ${self:custom.region}
+    REGION: ${self:provider.region}
   iamRoleStatements:
     - Effect: Allow
       Action:
