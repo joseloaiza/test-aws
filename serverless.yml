@@ -34,7 +34,7 @@ functions:
   #         method: GET
   createHero:
     handler: hero/create.createHero
-    name: create-hero
+    name: create-hero-v1
     memorySize: 128
     timeout: 5
     events:
