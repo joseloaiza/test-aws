@@ -35,15 +35,16 @@ const getCustomer = async (event) => {
 
 const createCustomer = async (event) => {
   const response = { statusCode: 200 };
+
   try {
     const customer = {
       customerId: uuid(),
       createdAt: new Date().toISOString(),
-      name: reqBody.name,
-      alias: reqBody.alias,
-      species: reqBody.species,
-      companyName: reqBody.companyName,
-      companyTeam: reqBody.companyTeam,
+      name: event.body.name,
+      alias: event.body.alias,
+      species: event.body.species,
+      companyName: event.body.companyName,
+      companyTeam: event.body.companyTeam,
     };
     //const body = JSON.parse(event.body);
 
