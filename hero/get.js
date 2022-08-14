@@ -6,14 +6,22 @@ const dynamoDb = require("../db");
 module.exports.getHero = async (event) => {
   try {
     const { id } = event.pathParameters;
+
     const params = {
-      TableName: process.env.DYNAMO_TABLE_NAME,
-      KeyConditionExpression: "id = :id",
-      ExpressionAttributeValues: {
-        ":id": id,
+      Key: {
+        id: id,
       },
-      Select: "ALL_ATTRIBUTES",
+      TableName: process.env.DYNAMO_TABLE_NAME,
     };
+
+    // const params = {
+    //   TableName: process.env.DYNAMO_TABLE_NAME,
+    //   KeyConditionExpression: "id = :id",
+    //   ExpressionAttributeValues: {
+    //     ":id": id,
+    //   },
+    //   Select: "ALL_ATTRIBUTES",
+    // };
 
     const data = await dynamoDb.query(params).promise();
     if (data.Count > 0) {
@@ -22,6 +30,9 @@ module.exports.getHero = async (event) => {
       return sendResponse(404, { message: "Hero not found" });
     }
   } catch (e) {
-    return sendResponse(500, { message: "Could not get the hero" });
+    return sendResponse(500, {
+      error: e.message,
+      message: "Could not get the hero",
+    });
   }
 };
