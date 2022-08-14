@@ -6,6 +6,7 @@ const {
   DeleteItemCommand,
   ScanCommand,
 } = require("@aws-sdk/client-dynamodb");
+
 const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 
 const getHero = async (event) => {
@@ -34,53 +35,66 @@ const getHero = async (event) => {
   return response;
 };
 
-const createHero = (event, callback) => {
+const createHero = async (event) => {
   const response = { statusCode: 200 };
-  const reqBody = JSON.parse(event.body);
-  reqBody.id = uuidv4();
 
-  const params = {
-    TableName: process.env.HEROES_TABLE,
-    Item: reqBody,
-  };
+  try {
+    // const reqBody = JSON.parse(event.body);
+    // const hero = {
+    //   id: uuidv4(),
+    //   name: reqBody.name,
+    //   alias: reqBody.alias,
+    //   species: reqBody.species,
+    //   companyName: reqBody.companyName,
+    //   companyTeam: reqBody.companyTeam,
+    // };
+    // const herobody = JSON.parse(hero);
 
-  // const hero = {
-  //   id: uuidv4(),
-  //   name: reqBody.name,
-  //   alias: reqBody.alias,
-  //   species: reqBody.species,
-  //   companyName: reqBody.companyName,
-  //   companyTeam: reqBody.companyTeam,
-  // };
-  // const herobody = JSON.parse(hero);
+    // id: { S: uuidv4() },
+    // name: { S: event.body.name },
+    // alias: { S: event.body.alias },
+    // species: { S: event.body.species },
+    // companyName: { S: event.body.companyName },
+    // companyTeam: { S: event.body.companyTeam },
 
-  // id: { S: uuidv4() },
-  // name: { S: event.body.name },
-  // alias: { S: event.body.alias },
-  // species: { S: event.body.species },
-  // companyName: { S: event.body.companyName },
-  // companyTeam: { S: event.body.companyTeam },
+    //console.log(herobody);
+    data = db.put_item(
+      (TableName = "database"),
+      (Item = {
+        id: { S: str(id_db) },
+        item: { S: "iphone-10" },
+        available: { BOOL: False },
+      })
+    );
 
-  //console.log(herobody);
-  return db
-    .put({
+    const params = {
       TableName: process.env.HEROES_TABLE,
-      Item: reqBody,
-    })
-    .promise()
-    .then(() => {
-      callback(null, response(201, hero));
-    })
-    .catch((err) => response(null, response(err.statusCode, err)));
+      Item: marshall({
+        id: uuidv4(),
+        name: event.body.name,
+        alias: event.body.alias,
+        species: event.body.species,
+        companyName: event.body.companyName,
+        companyTeam: event.body.companyTeam,
+      }),
+    };
 
-  //   const createResult = await db.put(new PutItemCommand(params));
+    const createResult = await db.send(new PutItemCommand(params));
 
-  //   response.body = JSON.stringify({
-  //     messsage: "Succesfully created hero",
-  //     createResult,
-  //   });
-
-  // return response;
+    response.body = JSON.stringify({
+      messsage: "Succesfully created hero",
+      createResult,
+    });
+  } catch (error) {
+    console.log(error);
+    response.statusCode = 400;
+    response.body = JSON.stringify({
+      message: "Failed to created hero",
+      errorMsg: error.messsage,
+      errorStack: error.stack,
+    });
+  }
+  return response;
 };
 
 const deleteHero = async (event) => {

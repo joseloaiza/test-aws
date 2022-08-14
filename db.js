@@ -1,5 +1,4 @@
-const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const REGION = "us-east-1";
-const client = new DynamoDBClient({ region: REGION });
+const AWS = require("aws-sdk");
+const client = new AWS.DynamoDB.DocumentClient();
 
 module.exports = client;
