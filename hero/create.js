@@ -2,13 +2,14 @@
 
 const dynamoDb = require("../db");
 const { sendResponse } = require("../functions/index");
-const uuidv1 = require("uuid/v1");
+const { v4: uuidv4 } = require("uuid");
+//const uuidv1 = require("uuid/v1");
 
 module.exports.createHero = async (event) => {
   const body = JSON.parse(event.body);
   try {
     const { name, alias, specie, companyName, companyTeam } = body;
-    const id = uuidv1();
+    const id = uuidv4();
     const TableName = process.env.DYNAMO_TABLE_NAME;
     const params = {
       TableName,
