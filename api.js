@@ -5,8 +5,8 @@ const {
   PutItemCommand,
   DeleteItemCommand,
   ScanCommand,
-  CreateTableCommand,
 } = require("@aws-sdk/client-dynamodb");
+
 const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 
 const getHero = async (event) => {
@@ -52,6 +52,7 @@ const createHero = async (event) => {
         companyTeam: { S: event.body.companyTeam },
       },
     };
+    console.log(params);
     const createResult = await db.send(new PutItemCommand(params));
 
     response.body = JSON.stringify({
