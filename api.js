@@ -1,5 +1,5 @@
 const db = require("./db");
-const uuid = require("uuid/v4");
+const { v4: uuidv4 } = require("uuid");
 const {
   GetItemCommand,
   PutItemCommand,
@@ -16,7 +16,7 @@ const getHero = async (event) => {
       Key: marshall({ id: event.pathParameters.id }),
     };
     const item = await db.send(new GetItemCommand(params));
-    console.log(Item);
+    console.log(item);
     response.body = JSON.stringify({
       messsage: "Succesfully retrieved hero",
       data: item ? unmarshall(item) : {},
@@ -39,7 +39,7 @@ const createHero = async (event) => {
 
   try {
     const hero = {
-      id: uuid(),
+      id: uuidv4(),
       createdAt: new Date().toISOString(),
       name: event.body.name,
       alias: event.body.alias,
