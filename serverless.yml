@@ -23,15 +23,16 @@ custom:
 plugins:
   - serverless-iam-roles-per-function
 functions:
-  # getHero:
-  #   handler: api.getHero
-  #   name: get-hero
-  #   memorySize: 128
-  #   timeout: 5
-  #   events:
-  #     - http:
-  #         path: hero/{id}
-  #         method: GET
+  getHero:
+    handler: hero/get.getHero
+    name: get-hero-v1
+    memorySize: 128
+    timeout: 20
+    events:
+      - http:
+          path: hero/{id}
+          method: GET
+          cors: true
   createHero:
     handler: hero/create.createHero
     name: create-hero-v1

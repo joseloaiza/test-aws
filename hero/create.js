@@ -3,7 +3,6 @@
 const dynamoDb = require("../db");
 const { sendResponse } = require("../functions/index");
 const { v4: uuidv4 } = require("uuid");
-//const uuidv1 = require("uuid/v1");
 
 module.exports.createHero = async (event) => {
   const body = JSON.parse(event.body);
@@ -24,8 +23,8 @@ module.exports.createHero = async (event) => {
       ConditionExpression: "attribute_not_exists(id)",
     };
     await dynamoDb.put(params).promise();
-    return sendResponse(200, { message: "Post created successfully" });
+    return sendResponse(200, { message: "Hero created successfully" });
   } catch (e) {
-    return sendResponse(500, { message: "Could not create the post" });
+    return sendResponse(500, { message: "Could not create the hero" });
   }
 };
