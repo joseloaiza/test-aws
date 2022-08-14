@@ -12,15 +12,6 @@ module.exports.getHero = async (event) => {
       TableName: process.env.DYNAMO_TABLE_NAME,
     };
 
-    // const params = {
-    //   TableName: process.env.DYNAMO_TABLE_NAME,
-    //   KeyConditionExpression: "id = :id",
-    //   ExpressionAttributeValues: {
-    //     ":id": id,
-    //   },
-    //   Select: "ALL_ATTRIBUTES",
-    // };
-
     const data = await dynamoDb.get(params).promise();
     if (data) {
       return sendResponse(200, { item: data.Item });

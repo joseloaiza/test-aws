@@ -1,7 +1,7 @@
 "use strict";
 
 const { sendResponse } = require("../functions/index");
-const dynamoDb = require("../dynamoDb");
+const dynamoDb = require("../db");
 
 module.exports.deleteHero = async (event) => {
   try {
@@ -20,4 +20,3 @@ module.exports.deleteHero = async (event) => {
     });
   }
 };
-Footer;
