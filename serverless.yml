@@ -63,7 +63,7 @@ functions:
     handler: api.getAllHero
     name: get-all-heroes
     memorySize: 128
-    timeout: 5
+    timeout: 15
     events:
       - http:
           path: Heros
