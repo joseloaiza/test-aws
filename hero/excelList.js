@@ -10,7 +10,7 @@ const {
 var workbook = new excel.Workbook();
 var worksheet = workbook.addWorksheet("Sheet 1");
 
-module.exports.listHeroesExcel = async (event) => {
+module.exports.listHeroesExcel = async (event, context) => {
   try {
     const params = {
       TableName: process.env.DYNAMO_TABLE_NAME,
@@ -84,11 +84,17 @@ module.exports.listHeroesExcel = async (event) => {
     //   await S3.upload(params).promise();
     // });
 
-    return sendResponse(200, { message: "Excel loaded successfully" });
+    return sendResponse(200, {
+      message: "Excel loaded successfully",
+      context,
+      event,
+    });
   } catch (e) {
     return sendResponse(500, {
       error: e.message,
       message: "Could not loaded heroes excel",
+      context,
+      event,
     });
   }
 };
