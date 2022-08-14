@@ -36,7 +36,7 @@ functions:
     handler: hero/create.createHero
     name: create-hero-v1
     memorySize: 128
-    timeout: 5
+    timeout: 20
     events:
       - http:
           path: hero/create
