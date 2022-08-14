@@ -8,7 +8,7 @@ const {
 } = require("@aws-sdk/client-dynamodb");
 const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 
-const getCustomer = async (event) => {
+const getHero = async (event) => {
   const response = { statusCode: 200 };
   try {
     const params = {
@@ -18,7 +18,7 @@ const getCustomer = async (event) => {
     const item = await db.send(new GetItemCommand(params));
     console.log(Item);
     response.body = JSON.stringify({
-      messsage: "Succesfully retrieved customer",
+      messsage: "Succesfully retrieved hero",
       data: item ? unmarshall(item) : {},
       rawData: item,
     });
@@ -26,7 +26,7 @@ const getCustomer = async (event) => {
     console.log(error);
     response.statusCode = 400;
     res.body = JSON.stringify({
-      message: "Failed to retrieve customer",
+      message: "Failed to retrieve hero",
       errorMsg: error.messsage,
       errorStack: error.stack,
     });
@@ -34,7 +34,7 @@ const getCustomer = async (event) => {
   return response;
 };
 
-const createCustomer = async (event) => {
+const createHero = async (event) => {
   const response = { statusCode: 200 };
 
   try {
@@ -56,14 +56,14 @@ const createCustomer = async (event) => {
     const createResult = await db.send(new PutItemCommand(params));
 
     response.body = JSON.stringify({
-      messsage: "Succesfully created customer",
+      messsage: "Succesfully created hero",
       createResult,
     });
   } catch (error) {
     console.log(error);
     response.statusCode = 400;
     response.body = JSON.stringify({
-      message: "Failed to created customer",
+      message: "Failed to created hero",
       errorMsg: error.messsage,
       errorStack: error.stack,
     });
@@ -71,7 +71,7 @@ const createCustomer = async (event) => {
   return response;
 };
 
-const deleteCustomer = async (event) => {
+const deleteHero = async (event) => {
   const response = { statusCode: 200 };
 
   try {
@@ -82,14 +82,14 @@ const deleteCustomer = async (event) => {
     const deleteResult = await db.send(new DeleteItemCommand(params));
 
     response.body = JSON.stringify({
-      message: "Successfully deleted customer.",
+      message: "Successfully deleted hero.",
       deleteResult,
     });
   } catch (e) {
     console.error(e);
     response.statusCode = 500;
     response.body = JSON.stringify({
-      message: "Failed to delete customer.",
+      message: "Failed to delete hero.",
       errorMsg: e.message,
       errorStack: e.stack,
     });
@@ -98,7 +98,7 @@ const deleteCustomer = async (event) => {
   return response;
 };
 
-const getAllCustomer = async () => {
+const getAllHeroes = async () => {
   const response = { statusCode: 200 };
 
   try {
@@ -107,7 +107,7 @@ const getAllCustomer = async () => {
     );
 
     response.body = JSON.stringify({
-      message: "Successfully retrieved all customers.",
+      message: "Successfully retrieved all heroes.",
       data: Items.map((item) => unmarshall(item)),
       Items,
     });
@@ -115,7 +115,7 @@ const getAllCustomer = async () => {
     console.error(e);
     response.statusCode = 500;
     response.body = JSON.stringify({
-      message: "Failed to retrieve customers.",
+      message: "Failed to retrieve heroes.",
       errorMsg: e.message,
       errorStack: e.stack,
     });
@@ -125,8 +125,8 @@ const getAllCustomer = async () => {
 };
 
 module.exports = {
-  getCustomer,
-  createCustomer,
-  deleteCustomer,
-  getAllCustomer,
+  getHero,
+  createHero,
+  deleteHero,
+  getAllHeroes,
 };
