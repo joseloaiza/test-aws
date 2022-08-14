@@ -61,7 +61,7 @@ const createCustomer = async (event) => {
   } catch (error) {
     console.log(error);
     response.statusCode = 400;
-    res.body = JSON.stringify({
+    response.body = JSON.stringify({
       message: "Failed to created customer",
       errorMsg: error.messsage,
       errorStack: error.stack,
