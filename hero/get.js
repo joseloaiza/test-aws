@@ -5,11 +5,9 @@ const dynamoDb = require("../db");
 
 module.exports.getHero = async (event) => {
   try {
-    const { id } = event.pathParameters;
-
     const params = {
       Key: {
-        id: id,
+        id: event.pathParameters.id,
       },
       TableName: process.env.DYNAMO_TABLE_NAME,
     };
@@ -24,7 +22,7 @@ module.exports.getHero = async (event) => {
     // };
 
     const data = await dynamoDb.get(params).promise();
-    if (data.Count > 0) {
+    if (data) {
       return sendResponse(200, { item: data.Item });
     } else {
       return sendResponse(404, { message: "Hero not found" });

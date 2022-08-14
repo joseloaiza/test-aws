@@ -68,7 +68,7 @@ functions:
     timeout: 20
     events:
       - http:
-          path: Heros
+          path: heroes
           method: GET
           cors: true
 resources:
