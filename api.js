@@ -42,7 +42,6 @@ const createCustomer = async (event) => {
       name: reqBody.name,
       alias: reqBody.alias,
       species: reqBody.species,
-      title: reqBody.title,
       companyName: reqBody.companyName,
       companyTeam: reqBody.companyTeam,
     };
