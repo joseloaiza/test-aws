@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 
 module.exports.createHero = async (event) => {
   const body = JSON.parse(event.body);
+  console.log(body);
   try {
     const { name, alias, specie, companyName, companyTeam } = body;
     const id = uuidv4();
