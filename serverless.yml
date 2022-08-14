@@ -48,6 +48,7 @@ plugins:
   - serverless-offline
   - serverless-deployment-bucket
   - serverless-bundle
+  - serverless-apigw-binary
 functions:
   getHero:
     handler: hero/get.getHero
@@ -109,7 +110,7 @@ functions:
           path: heroesExcel
           method: GET
           cors: true
-  listHeroesExcel:
+  listHeroesPdf:
     handler: hero/pdfList.listHeroesPdf
     name: get-pdf-heroes
     memorySize: 128
@@ -118,7 +119,7 @@ functions:
       - http:
           path: heroesPdf
           method: GET
-          cors: true        
+          cors: true
 resources:
   Resources:
     HerosTable:
