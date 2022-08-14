@@ -46,15 +46,25 @@ module.exports.listHeroesExcel = async (event) => {
       worksheet.cell(i + 2, 5).string(item.companyTeam);
     });
 
-    workbook.writeToBuffer().then((buffer) => {
-      var params = {
-        Bucket: "data-heroes",
-        Key: `xlsxFolder/${date}.xlsx`,
-        Body: buffer,
-        ACL: "public-read",
-      };
-      await S3.upload(params).promise()
-    });
+    const buffer = await workbook.writeToBuffer();
+    const params_s3 = {
+      Bucket: "data-heroes",
+      Key: `xlsxFolder/${date}.xlsx`,
+      Body: buffer,
+      ACL: "public-read",
+    };
+
+    await S3.upload(params_s3).promise();
+
+    // workbook.writeToBuffer().then((buffer) => {
+    //   var params = {
+    //     Bucket: "data-heroes",
+    //     Key: `xlsxFolder/${date}.xlsx`,
+    //     Body: buffer,
+    //     ACL: "public-read",
+    //   };
+    //   await S3.upload(params).promise();
+    // });
 
     return sendResponse(200, { message: "Excel loaded successfully" });
   } catch (e) {
