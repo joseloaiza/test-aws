@@ -1,5 +1,4 @@
 "use strict";
-
 const dynamoDb = require("../db");
 const { sendResponse } = require("../functions/index");
 const { v4: uuidv4 } = require("uuid");
