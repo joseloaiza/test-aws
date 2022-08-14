@@ -23,9 +23,9 @@ module.exports.getHero = async (event) => {
     //   Select: "ALL_ATTRIBUTES",
     // };
 
-    const data = await dynamoDb.query(params).promise();
+    const data = await dynamoDb.get(params).promise();
     if (data.Count > 0) {
-      return sendResponse(200, { item: data.Items });
+      return sendResponse(200, { item: data.Item });
     } else {
       return sendResponse(404, { message: "Hero not found" });
     }

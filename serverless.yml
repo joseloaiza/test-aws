@@ -52,24 +52,25 @@ functions:
   #     - http:
   #         path: Hero/{id}
   #         method: PUT
-#   deleteHero:
-#     handler: api.deleteHero
-#     name: delete-hero
-#     memorySize: 128
-#     timeout: 5
-#     events:
-#       - http:
-#           path: Hero/{id}
-#           method: DELETE
-#   getAllHeroes:
-#     handler: api.getAllHeroes
-#     name: get-all-heroes
-#     memorySize: 128
-#     timeout: 15
-#     events:
-#       - http:
-#           path: Heros
-#           method: GET
+  #   deleteHero:
+  #     handler: api.deleteHero
+  #     name: delete-hero
+  #     memorySize: 128
+  #     timeout: 5
+  #     events:
+  #       - http:
+  #           path: Hero/{id}
+  #           method: DELETE
+  listHeroes:
+    handler: hero/list.listHeroes
+    name: get-list-heroes
+    memorySize: 128
+    timeout: 20
+    events:
+      - http:
+          path: Heros
+          method: GET
+          cors: true
 resources:
   Resources:
     HerosTable:
