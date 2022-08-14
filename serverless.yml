@@ -10,12 +10,12 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dybamodb:DescribeTable
-        - dybamodb:Scan
-        - dybamodb:GetItem
-        - dybamodb:PutItem
-        - dybamodb:UpdateItem
-        - dybamodb:DeleteItem
+        - dynamodb:DescribeTable
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
       Resource:
         - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.cusTableName}"
 custom:
