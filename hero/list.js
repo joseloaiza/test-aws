@@ -8,8 +8,8 @@ module.exports.listHeroes = async (event) => {
     const params = {
       TableName: process.env.DYNAMO_TABLE_NAME,
     };
-    const posts = await dynamoDb.scan(params).promise();
-    return sendResponse(200, { items: posts.Items });
+    const heroes = await dynamoDb.scan(params).promise();
+    return sendResponse(200, { items: heroes.Items });
   } catch (e) {
     return sendResponse(500, {
       error: e.message,
