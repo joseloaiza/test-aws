@@ -43,15 +43,16 @@ functions:
           path: hero/create
           method: POST
           cors: true
-  # updateHero:
-  #   handler: api.updateHero
-  #   name: update-Hero
-  #   memorySize: 128
-  #   timeout: 5
-  #   events:
-  #     - http:
-  #         path: Hero/{id}
-  #         method: PUT
+  updateHero:
+    handler: hero/update.updateHero
+    name: update-Hero-v1
+    memorySize: 128
+    timeout: 20
+    events:
+      - http:
+          path: hero/{id}
+          method: PUT
+          cors: true
   deleteHero:
     handler: hero/delete.deleteHero
     name: delete-hero-v1
