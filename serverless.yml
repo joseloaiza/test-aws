@@ -32,23 +32,23 @@ custom:
   pdfFolder: pdfFolder
   serverless-offline:
     location: .webpack/service
-  bundle:
-    sourcemaps: false
-    copyFiles:
-      - from: "node_modules/chrome-aws-lambda/bin/aws.tar.br"
-        to: "./bin"
-      - from: "node_modules/chrome-aws-lambda/bin/chromium.br"
-        to: "./bin"
-      - from: "node_modules/chrome-aws-lambda/bin/swiftshader.tar.br"
-        to: "./bin"
+  apigwBinary:
+    types:
+      - "image/jpeg"
+      - "text/html"
+      - "application/pdf"
+      - "multipart/form-data"
   headers:
     - Content-Type
 plugins:
   - serverless-iam-roles-per-function
-  - serverless-offline
-  - serverless-deployment-bucket
-  - serverless-bundle
+  # - serverless-offline
+  # - serverless-deployment-bucket
+  # - serverless-bundle
   - serverless-apigw-binary
+layers:
+  pdfGeneration:
+    path: pdf_generation
 functions:
   getHero:
     handler: hero/get.getHero

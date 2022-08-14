@@ -1,7 +1,6 @@
 "use strict";
-//const chromium = require("chrome-aws-lambda");
+
 const chromium = require("chrome-aws-lambda");
-const puppeteer = require("puppeteer-serverless");
 const { sendResponse } = require("../functions/index");
 const dynamoDb = require("../db");
 var AWS = require("aws-sdk");
@@ -26,41 +25,29 @@ module.exports.listHeroesPdf = async (event, context) => {
     const heroes = await dynamoDb.scan(params).promise();
 
     const page = await browser.newPage();
-    await page.setContent("<html><body><p>Test</p></body></html>", {
-      waitUntil: "load",
-    });
+    await page.setContent(`<h1>Your awesome PDF report template</h1>`);
 
     pdf = await page.pdf({
+      path: "/tmp/pdfReport.pdf", // TAKE ATTENTION!!
       format: "A4",
       printBackground: true,
+      margin: { top: 20, left: 20, right: 20, bottom: 20 },
       displayHeaderFooter: true,
-      margin: {
-        top: 40,
-        right: 0,
-        bottom: 40,
-        left: 0,
-      },
-      headerTemplate: `
-          <div style="border-bottom: solid 1px gray; width: 100%; font-size: 11px;
-                padding: 5px 5px 0; color: gray; position: relative;">
-          </div>`,
-      footerTemplate: `
-          <div style="border-top: solid 1px gray; width: 100%; font-size: 11px;
-              padding: 5px 5px 0; color: gray; position: relative;">
-              <div style="position: absolute; right: 20px; top: 2px;">
-                <span class="pageNumber"></span>/<span class="totalPages"></span>
-              </div>
-          </div>
-        `,
     });
 
     return {
-      headers: {
-        "Content-type": "application/pdf",
-        "content-disposition": "attachment; filename=test.pdf",
-      },
       statusCode: 200,
-      body: pdf.toString("base64"),
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Disposition": "attachment; filename=test.pdf",
+        "X-Requested-With": "*",
+        "Access-Control-Allow-Headers":
+          "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Requested-With",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: "Done!",
       isBase64Encoded: true,
     };
   } catch (e) {
