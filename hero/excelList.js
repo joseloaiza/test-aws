@@ -63,7 +63,7 @@ module.exports.listHeroesExcel = async (event, context) => {
       Key: filename,
     };
     const fildown = await S3.getObject(params_dow).promise();
-    await fs.writeFileSync("/tmp/filename", fildown.Body).promise();
+    //await fs.writeFileSync("/tmp/filename", fildown.Body).promise();
 
     // //return the file
     // return {
