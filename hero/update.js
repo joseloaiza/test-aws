@@ -7,21 +7,21 @@ module.exports.updateHero = async (event) => {
   try {
     const body = JSON.parse(event.body);
 
-    const { name, alias, specie, companyName, companyTeam, id } = body;
+    const { heroName, alias, specie, companyName, companyTeam, id } = body;
     const params = {
       TableName: process.env.DYNAMO_TABLE_NAME,
       Key: {
         id,
       },
       ExpressionAttributeValues: {
-        ":name": name,
+        ":heroName": heroName,
         ":alias": alias,
         ":specie": specie,
         ":companyName": companyName,
         ":companyTeam": companyTeam,
       },
       UpdateExpression:
-        "SET name = :name, alias = :alias, specie = :specie, companyName = :companyName, companyTeam = :companyTeam",
+        "SET heroName = :heroName, alias = :alias, specie = :specie, companyName = :companyName, companyTeam = :companyTeam",
       ReturnValues: "ALL_NEW",
     };
 

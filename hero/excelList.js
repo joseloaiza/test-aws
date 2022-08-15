@@ -43,7 +43,7 @@ module.exports.listHeroesExcel = async (event, context) => {
 
     items.forEach((item, i) => {
       worksheet.cell(i + 2, 1).string(item.id);
-      worksheet.cell(i + 2, 2).string(item.name);
+      worksheet.cell(i + 2, 2).string(item.Heroname);
       worksheet.cell(i + 2, 3).string(item.alias);
       worksheet.cell(i + 2, 4).string(item.companyName);
       worksheet.cell(i + 2, 5).string(item.companyTeam);

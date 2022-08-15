@@ -6,10 +6,10 @@ const { v4: uuidv4 } = require("uuid");
 module.exports.createHero = async (event) => {
   try {
     const body = JSON.parse(event.body);
-    const { name, alias, specie, companyName, companyTeam } = body;
+    const { heroName, alias, specie, companyName, companyTeam } = body;
     if (
-      !body.name ||
-      body.name.trim() === "" ||
+      !body.heroName ||
+      body.heroName.trim() === "" ||
       !body.companyName ||
       body.companyName.trim() === ""
     ) {
@@ -24,7 +24,7 @@ module.exports.createHero = async (event) => {
       TableName,
       Item: {
         id,
-        name,
+        heroName,
         alias,
         specie,
         companyName,
