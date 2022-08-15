@@ -3,7 +3,7 @@
 const chromium = require("chrome-aws-lambda");
 const { sendResponse } = require("../functions/index");
 const dynamoDb = require("../db");
-const PDFDocument = require("pdfkit");
+const PDFKit = require("pdfkit");
 const AWS = require("aws-sdk");
 //var S3 = new AWS.S3();
 module.exports.listHeroesPdf = async (event, context) => {

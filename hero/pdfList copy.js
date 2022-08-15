@@ -25,6 +25,7 @@ module.exports.listHeroesPdf = async (event, context) => {
 
     const page = await browser.newPage();
     await page.setContent(`<h1>Your awesome PDF report template</h1>`);
+    await page.setContent(`<h1>Your awesome PDF report template</h1>`);
 
     pdf = await page.pdf({
       path: "/tmp/pdfReport.pdf", // TAKE ATTENTION!!
