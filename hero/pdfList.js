@@ -6,9 +6,10 @@ const dynamoDb = require("../db");
 const PDFKit = require("pdfkit");
 const AWS = require("aws-sdk");
 const SES = new AWS.SES({ region: process.env.REGION });
+const S3 = new AWS.S3();
 const validator = require("email-validator");
 const nodemailer = require("nodemailer");
-//var S3 = new AWS.S3();
+
 module.exports.listHeroesPdf = async (event, context) => {
   try {
     const doc = new PDFKit();
