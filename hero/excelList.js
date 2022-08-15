@@ -6,12 +6,20 @@ const nodemailer = require("nodemailer");
 const AWS = require("aws-sdk");
 const S3 = new AWS.S3();
 const SES = new AWS.SES({ region: process.env.REGION });
+const validator = require("email-validator");
 var excel = require("excel4node");
 var workbook = new excel.Workbook();
 var worksheet = workbook.addWorksheet("Sheet 1");
 
 module.exports.listHeroesExcel = async (event, context) => {
   try {
+    const mailTo = event.queryStringParameters.mail;
+    if (!validator.validate(mailTo)) {
+      return sendResponse(200, {
+        message: "Enter a valid email address",
+      });
+    }
+
     const params = {
       TableName: process.env.DYNAMO_TABLE_NAME,
     };
@@ -63,9 +71,9 @@ module.exports.listHeroesExcel = async (event, context) => {
     const options = {
       from: "joseloaiza815@gmail.com",
       subject: "Hero Report",
-      to: "joseloaiza815@gmail.com",
+      to: mailTo,
       text: "prueba reporte hero",
-      html: `<div>${"esto es una prueba"}</div>`,
+      html: `<div>${"Report Hero"}</div>`,
       attachments: [
         {
           filename: `${date}.xlsx`,
