@@ -30,8 +30,7 @@ custom:
   bucketName: data-heroes
   excelFolder: xlsxFolder
   pdfFolder: pdfFolder
-  headers:
-    - Content-Type
+
 plugins:
   - serverless-iam-roles-per-function
 functions:

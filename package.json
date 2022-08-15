@@ -10,12 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.145.0",
-    "@aws-sdk/util-dynamodb": "^3.145.0",
     "aws-sdk": "^2.1194.0",
-    "chrome-aws-lambda": "^10.1.0",
     "excel4node": "^1.8.0",
-    "fs": "^0.0.1-security",
     "serverless-iam-roles-per-function": "^3.2.0",
     "uuid": "^8.3.2"
   }

@@ -8,6 +8,8 @@ module.exports.createHero = async (event) => {
   console.log(body);
   try {
     const { name, alias, specie, companyName, companyTeam } = body;
+    console.log("este es el nombre" + name);
+
     const id = uuidv4();
     const TableName = process.env.DYNAMO_TABLE_NAME;
     const params = {
