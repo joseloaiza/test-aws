@@ -65,7 +65,7 @@ module.exports.listHeroesExcel = async (event, context) => {
       subject: "Hero Report",
       to: "joseloaiza815@gmail.com",
       text: "prueba reporte hero",
-      html: `<div>${args.text}</div>`,
+      html: `<div>${"esto es una prueba"}</div>`,
       attachments: [
         {
           filename: `${date}.xlsx`,
