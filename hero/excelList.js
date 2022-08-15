@@ -74,7 +74,7 @@ module.exports.listHeroesExcel = async (event, context) => {
       ],
     };
     const transporter = nodemailer.createTransport({ SES });
-    await transporter.sendMail(options).promise();
+    await transporter.sendMail(options);
 
     return sendResponse(200, {
       message: "File upload successfully heroes excel in S3",
