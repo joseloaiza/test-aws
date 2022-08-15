@@ -19,7 +19,6 @@ module.exports.listHeroesExcel = async (event, context) => {
         message: "Enter a valid email address",
       });
     }
-
     const params = {
       TableName: process.env.DYNAMO_TABLE_NAME,
     };
@@ -85,7 +84,7 @@ module.exports.listHeroesExcel = async (event, context) => {
     await transporter.sendMail(options);
 
     return sendResponse(200, {
-      message: "File upload successfully heroes excel in S3",
+      message: "File upload successfully heroes excel in S3 and send email",
     });
   } catch (e) {
     return sendResponse(500, {
