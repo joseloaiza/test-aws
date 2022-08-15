@@ -5,6 +5,8 @@ provider:
   runtime: nodejs14.x
   stage: dev
   region: us-east-1
+  httpApi:
+    cors: true
   environment:
     DYNAMO_TABLE_NAME: ${self:custom.heroTableName}
     REGION: ${self:provider.region}
@@ -91,16 +93,16 @@ functions:
           path: heroesExcel
           method: GET
           cors: true
-  # listHeroesPdf:
-  #   handler: hero/pdfList.listHeroesPdf
-  #   name: get-pdf-heroes
-  #   memorySize: 128
-  #   timeout: 20
-  #   events:
-  #     - http:
-  #         path: heroesPdf
-  #         method: GET
-  #         cors: true
+  listHeroesPdf:
+    handler: hero/pdfList.listHeroesPdf
+    name: get-pdf-heroes
+    memorySize: 128
+    timeout: 20
+    events:
+      - http:
+          path: heroesPdf
+          method: GET
+          cors: true
 resources:
   Resources:
     HerosTable:
