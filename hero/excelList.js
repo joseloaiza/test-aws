@@ -58,29 +58,9 @@ module.exports.listHeroesExcel = async (event, context) => {
     };
     //save the information in S3
     await S3.upload(params_s3).promise();
-    const params_dow = {
-      Bucket: process.env.BUCKET_NAME,
-      Key: filename,
-    };
-    //const fildown = await S3.getObject(params_dow).promise();
-    //await fs.writeFileSync("/tmp/filename", fildown.Body).promise();
-
-    // //return the file
-    // return {
-    //   statusCode: 200,
-    //   headers: {
-    //     "Access-Control-Allow-Origin": "*",
-    //     "Access-Control-Allow-Methods": "*",
-    //     "Content-type":
-    //       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    //     "Content-Disposition": `attachment; filename=${filename}`,
-    //   },
-    //   isBase64Encoded: true,
-    //   body: buffer.toString("base64"),
-    // };
 
     return sendResponse(200, {
-      message: "File upload successfully heroes excel",
+      message: "File upload successfully heroes excel in S3",
     });
   } catch (e) {
     return sendResponse(500, {
