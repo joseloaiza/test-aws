@@ -5,9 +5,6 @@ provider:
   runtime: nodejs14.x
   stage: dev
   region: us-east-1
-  apiGateway:
-    binaryMediaTypes:
-      - "*/*"
   environment:
     DYNAMO_TABLE_NAME: ${self:custom.heroTableName}
     REGION: ${self:provider.region}
