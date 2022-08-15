@@ -37,7 +37,7 @@ plugins:
 functions:
   getHero:
     handler: hero/get.getHero
-    name: get-hero
+    name: getHero
     memorySize: 128
     timeout: 20
     events:
@@ -47,7 +47,7 @@ functions:
           cors: true
   createHero:
     handler: hero/create.createHero
-    name: create-hero
+    name: createHero
     memorySize: 128
     timeout: 20
     events:
@@ -57,7 +57,7 @@ functions:
           cors: true
   updateHero:
     handler: hero/update.updateHero
-    name: update-Hero
+    name: updateHero
     memorySize: 128
     timeout: 20
     events:
@@ -67,7 +67,7 @@ functions:
           cors: true
   deleteHero:
     handler: hero/delete.deleteHero
-    name: delete-hero
+    name: deleteHero
     memorySize: 128
     timeout: 20
     events:
@@ -77,7 +77,7 @@ functions:
           cors: true
   listHeroes:
     handler: hero/list.listHeroes
-    name: get-list-heroes
+    name: getlistHeroes
     memorySize: 128
     timeout: 20
     events:
@@ -87,7 +87,7 @@ functions:
           cors: true
   listHeroesExcel:
     handler: hero/excelList.listHeroesExcel
-    name: get-excel-heroes
+    name: getExcelHeroes
     memorySize: 128
     timeout: 20
     events:
