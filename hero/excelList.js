@@ -2,8 +2,10 @@
 const { sendResponse } = require("../functions/index");
 const dynamoDb = require("../db");
 const fs = require("fs");
-var AWS = require("aws-sdk");
-var S3 = new AWS.S3();
+const nodemailer = require("nodemailer");
+const AWS = require("aws-sdk");
+const S3 = new AWS.S3();
+const SES = new AWS.SES({ region: process.env.REGION });
 var excel = require("excel4node");
 var workbook = new excel.Workbook();
 var worksheet = workbook.addWorksheet("Sheet 1");
@@ -58,6 +60,21 @@ module.exports.listHeroesExcel = async (event, context) => {
     };
     //save the information in S3
     await S3.upload(params_s3).promise();
+    const options = {
+      from: "joseloaiza815@gmail.com",
+      subject: "Hero Report",
+      to: "joseloaiza815@gmail.com",
+      text: "prueba reporte hero",
+      html: `<div>${args.text}</div>`,
+      attachments: [
+        {
+          filename: `${date}.xlsx`,
+          content: buffer,
+        },
+      ],
+    };
+    const transporter = nodemailer.createTransport({ SES });
+    await transporter.sendMail(options).promise();
 
     return sendResponse(200, {
       message: "File upload successfully heroes excel in S3",
