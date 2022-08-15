@@ -10,12 +10,13 @@ module.exports.createHero = async (event) => {
     if (
       !body.name ||
       body.name.trim() === "" ||
-      !body.alias ||
-      body.alias.trim() === ""
+      !body.companyName ||
+      body.companyName.trim() === ""
     ) {
-      return sendResponse(200, { message: "no se puede crear datos vacios" });
+      return sendResponse(200, {
+        message: "Please enter a name and company name",
+      });
     }
-    console.log("este es el nombre" + name);
 
     const id = uuidv4();
     const TableName = process.env.DYNAMO_TABLE_NAME;

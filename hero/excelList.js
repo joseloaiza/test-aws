@@ -1,6 +1,7 @@
 "use strict";
 const { sendResponse } = require("../functions/index");
 const dynamoDb = require("../db");
+const fs = require("fs");
 var AWS = require("aws-sdk");
 var S3 = new AWS.S3();
 var excel = require("excel4node");
@@ -57,19 +58,31 @@ module.exports.listHeroesExcel = async (event, context) => {
     };
     //save the information in S3
     await S3.upload(params_s3).promise();
-    //return the file
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "*",
-        "Content-type":
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "Content-Disposition": `attachment; filename=${filename}`,
-      },
-      isBase64Encoded: true,
-      body: buffer.toString("base64"),
+    const params_dow = {
+      Bucket: process.env.BUCKET_NAME,
+      Key: filename,
     };
+    const fildown = await S3.getObject(params_dow).promise();
+    await fs.writeFile("/tmp/filename", fildown.Body).promise();
+
+    // //return the file
+    // return {
+    //   statusCode: 200,
+    //   headers: {
+    //     "Access-Control-Allow-Origin": "*",
+    //     "Access-Control-Allow-Methods": "*",
+    //     "Content-type":
+    //       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    //     "Content-Disposition": `attachment; filename=${filename}`,
+    //   },
+    //   isBase64Encoded: true,
+    //   body: buffer.toString("base64"),
+    // };
+
+    return sendResponse(500, {
+      error: e.message,
+      message: "File upload successfully heroes excel",
+    });
   } catch (e) {
     return sendResponse(500, {
       error: e.message,
