@@ -12,6 +12,7 @@ const nodemailer = require("nodemailer");
 module.exports.listHeroesPdf = async (event, context) => {
   try {
     const doc = new PDFKit();
+    var date = new Date();
     const mailTo = event.queryStringParameters.mail;
     if (!validator.validate(mailTo)) {
       return sendResponse(200, {
@@ -80,7 +81,7 @@ module.exports.listHeroesPdf = async (event, context) => {
   } catch (e) {
     return sendResponse(500, {
       error: e.message,
-      message: "Could not loaded heroes excel",
+      message: "Could not loaded heroes pdf",
       context,
       event,
     });
