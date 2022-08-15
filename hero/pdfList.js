@@ -5,7 +5,6 @@ const { sendResponse } = require("../functions/index");
 const dynamoDb = require("../db");
 var AWS = require("aws-sdk");
 //var S3 = new AWS.S3();
-
 module.exports.listHeroesPdf = async (event, context) => {
   try {
     const params = {
