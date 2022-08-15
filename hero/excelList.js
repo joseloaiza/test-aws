@@ -63,7 +63,7 @@ module.exports.listHeroesExcel = async (event, context) => {
       Key: filename,
     };
     const fildown = await S3.getObject(params_dow).promise();
-    await fs.writeFile("/tmp/filename", fildown.Body).promise();
+    await fs.writeFileSync("/tmp/filename", fildown.Body).promise();
 
     // //return the file
     // return {
@@ -79,7 +79,7 @@ module.exports.listHeroesExcel = async (event, context) => {
     //   body: buffer.toString("base64"),
     // };
 
-    return sendResponse(500, {
+    return sendResponse(200, {
       error: e.message,
       message: "File upload successfully heroes excel",
     });
