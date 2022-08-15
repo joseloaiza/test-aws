@@ -1,4 +1,4 @@
-service: hero-crud-aws
+service: hero-api-aws
 
 provider:
   name: aws
