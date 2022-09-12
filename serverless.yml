@@ -11,6 +11,7 @@ provider:
     DYNAMO_TABLE_NAME: ${self:custom.heroTableName}
     REGION: ${self:provider.region}
     BUCKET_NAME: ${self:custom.bucketName}
+    BUCKET_NAME_UPLOAD: ${self:custom.bucketNameUpload}
     EXCEL_FOLDER: ${self:custom.excelFolder}
     PDF_FOLDER: ${self:custom.pdfFolder}
   iamRoleStatements:
@@ -27,6 +28,7 @@ provider:
 custom:
   heroTableName: Heroes-Table${self:provider.stage}
   bucketName: data-heroes
+  bucketNameUpload: testpayroll
   excelFolder: xlsxFolder
   pdfFolder: pdfFolder
 
@@ -102,6 +104,16 @@ functions:
       - http:
           path: heroesPdf
           method: GET
+          cors: true
+  uploadfile:
+    handler: hero/uploadfile.uploadfile
+    name: uploadfile
+    memorySize: 128
+    timeout: 20
+    events:
+      - http:
+          path: hero/uploadfile
+          method: POST
           cors: true
 resources:
   Resources:
